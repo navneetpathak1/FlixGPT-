@@ -1,14 +1,16 @@
-
+import appStore from "./utils/appStore"
 import './App.css'
 import Streamify from './main/Streamify'
-
+import { Provider } from 'react-redux'
 
 
 function App() {
 
   return (
     <>
-      <Streamify/>
+      <Provider store = {appStore}>
+        <Streamify/>
+      </Provider>
     </>
   )
 }
