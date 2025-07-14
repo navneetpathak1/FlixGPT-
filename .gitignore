@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-.\src\utils\firebase.js
-.\src\utils\constant.js
+src/utils/constant.js
+src/utils/firebase.js

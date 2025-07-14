@@ -5,12 +5,16 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 import { useEffect } from "react";
 import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGE } from "../utils/constant";
+import {changeLanguage} from "../utils/configSlice";
 
 const Header = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const showGptSearch = useSelector(store=> store.gpt.showGptSearch)
 
   const handleSignOut = () => {
     signOut(auth)
@@ -45,6 +49,15 @@ const Header = ({ data }) => {
     return unsubscribe;
   }, [dispatch, navigate]);
 
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+    setIsClicked(!isClicked);
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value))
+  }
+
   return (
     <header className="absolute top-0 left-0 w-full flex justify-between items-center p-4 bg-gradient-to-b from-black/70 to-transparent z-20">
       <div className="h-15 w-35">
@@ -56,12 +69,35 @@ const Header = ({ data }) => {
       </div>
 
       {data === "Sign Out" ? (
-        <button
-          onClick={handleSignOut}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-        >
-          {data}
-        </button>
+        <div>
+          {showGptSearch && (
+            <select
+              onChange={handleLanguageChange}
+             className="bg-gray-800 text-white px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-600">
+              {SUPPORTED_LANGUAGE.map((lang) => (
+                <option
+                  key={lang.identifier}
+                  value={lang.identifier}
+                  // className="bg-blue-900 font-bold text-white px-4 py-2 rounded hover:bg-red-700 transition mx-3"
+                >
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          ) }
+          <button
+            className="bg-blue-900 font-bold text-white px-4 py-2 rounded hover:bg-red-700 transition mx-3"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch?"Home Page":"Use GPT Search"}
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+          >
+            {data}
+          </button>
+        </div>
       ) : data === "Login" ? (
         <Link to="/login">
           <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">

@@ -2,9 +2,11 @@ import { useSelector } from "react-redux";
 import useTrailerVideo from "../../../Hooks/useTrailerVideo";
 
 const VideoBackground = ({ moviesID }) => {
-  const trailerKey = useSelector((store) => store.movies?.trailerVideo);
-
+  // Custom hook to fetch trailer when moviesID changes
   useTrailerVideo(moviesID);
+
+  // Get trailer key from Redux
+  const trailerKey = useSelector((store) => store.movies?.trailerVideo);
 
   if (!trailerKey) {
     return (
@@ -19,10 +21,12 @@ const VideoBackground = ({ moviesID }) => {
       <iframe
         className="absolute top-0 left-0 w-full h-full"
         src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&loop=1&playlist=${trailerKey}`}
-        title="YouTube video player"
+        title="Movie trailer"
         frameBorder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowFullScreen
+        loading="lazy"
+        tabIndex="-1"
       />
     </div>
   );
