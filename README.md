@@ -5,6 +5,7 @@ Streamify-GPT is an optimal movie streaming and recommendation web application b
 ## Features
 
 - User authentication with Firebase
+- Multi-language support
 - Movie search and recommendations using OpenAI GPT
 - Secure routing with protected routes (unauthenticated users cannot access main content)
 - Custom React hooks
@@ -45,3 +46,5 @@ npm run dev
 ## Contributing
 
 Pull requests are welcome! Please make sure your changes are well-tested and linted.
+
+---
