@@ -51,7 +51,7 @@ const Header = ({ data }) => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
-    setIsClicked(!isClicked);
+    // setIsClicked(!isClicked);
   };
 
   const handleLanguageChange = (e) => {

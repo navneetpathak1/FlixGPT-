@@ -1,6 +1,7 @@
 import { IMG_URL } from "../../../utils/constant";
 
 const MoviesCart = ({ posterPath }) => {
+  if(!posterPath) return null;
   return (
     <div className="min-w-[160px] md:min-w-[180px] lg:min-w-[200px] transition-transform duration-300 transform hover:scale-110">
       <img
